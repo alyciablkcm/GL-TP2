@@ -45,8 +45,6 @@ public class StatementPrinter {
                  }
                  thisAmount += 3.0 * perf.audience;
                  break;
-             default:
-                 throw new Error("Unknown type: " + play.type);
          }
          return thisAmount;
      }
