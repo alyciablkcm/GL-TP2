@@ -15,9 +15,11 @@ public class StatementPrinterTests {
 
     @Test
     void exampleStatement() {
+        Play p1 = new Tragedy("Hamlet");
+        Play p2 = new Comedy("As You Like It");
         Map<String, Play> plays = Map.of(
-                "hamlet",  Play.createPlay("Hamlet", "tragedy"),
-                "as-like", Play.createPlay("As You Like It", "comedy"),
+                "hamlet",  p1,
+                "as-like", p2,
                 "othello", Play.createPlay("Othello", "tragedy"));
 
         Invoice invoice = new Invoice("BigCo", List.of(
@@ -43,7 +45,7 @@ public class StatementPrinterTests {
     }
 
     @Test
-    public void testToHTMLFile() {
+    void testToHTMLFile() {
       Map<String, Play> plays = Map.of(
               "hamlet",  Play.createPlay("Hamlet", "tragedy"),
               "as-like", Play.createPlay("As You Like It", "comedy"),
@@ -62,7 +64,7 @@ public class StatementPrinterTests {
     }
 
      @Test
-    public void testToTEXTFile() {
+     void testToTEXTFile() {
       Map<String, Play> plays = Map.of(
               "hamlet",  Play.createPlay("Hamlet", "tragedy"),
               "as-like", Play.createPlay("As You Like It", "comedy"),
