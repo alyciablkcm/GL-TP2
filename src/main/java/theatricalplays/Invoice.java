@@ -26,4 +26,14 @@ public class Invoice {
       e.printStackTrace();
     }
   }
+
+  public void toTEXTFile(Map<String, Play> plays, String fileName) {
+    StatementPrinter statementPrinter = new StatementPrinter();
+    String htmlInvoice = statementPrinter.print(this,plays);
+    try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
+      writer.write(htmlInvoice);
+    } catch (IOException e) {
+      e.printStackTrace();
+    }
+  }
 }

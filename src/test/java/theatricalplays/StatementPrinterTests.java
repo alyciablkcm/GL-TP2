@@ -60,4 +60,23 @@ public class StatementPrinterTests {
       assertTrue(file.exists());
       assertTrue(file.length() > 0);
     }
+
+     @Test
+    public void testToTEXTFile() {
+      Map<String, Play> plays = Map.of(
+              "hamlet",  Play.createPlay("Hamlet", "tragedy"),
+              "as-like", Play.createPlay("As You Like It", "comedy"),
+              "othello", Play.createPlay("Othello", "tragedy"));
+
+      Invoice invoice = new Invoice("BigCo", List.of(
+              new Performance("hamlet", 55),
+              new Performance("as-like", 35),
+              new Performance("othello", 40)));
+      String testFileName = "test_dahbia_invoice.txt";
+      invoice.toTEXTFile(plays, testFileName);
+      //  Vérifier si le fichier existe et a une taille non nulle.
+      File file = new File(testFileName);
+      assertTrue(file.exists());
+      assertTrue(file.length() > 0);
+    }
 }
