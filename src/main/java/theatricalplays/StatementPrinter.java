@@ -10,7 +10,8 @@ public class StatementPrinter {
        double totalAmount = 0.0;
        int volumeCredits = 0;
        StringBuffer result = new StringBuffer();
-       result.append(String.format("Statement for %s\n", invoice.customer));
+       Customer customer= invoice.customer;
+       result.append(String.format("Statement for %s\n", customer.name));
 
        for (Performance perf : invoice.performances) {
          Play play = plays.get(perf.playID);
@@ -31,11 +32,13 @@ public class StatementPrinter {
       double totalAmount = 0.0;
       int volumeCredits = 0;
       StringBuilder html = new StringBuilder();
+      Customer customer= invoice.customer;
          html.append("<html><head><title>Invoice</title></head><body>");
          html.append("<h1>Invoice</h1>");
-         html.append("<p>Client: " + invoice.customer + "</p>");
+         html.append("<p>Client: " + customer.name + "</p>");
          html.append("<table border=\"1\">");
          html.append("<tr><th>Piece</th><th>Seats sold</th><th colspan='2'>Price</th></tr>");
+
       for (Performance perf : invoice.performances) {
         Play play = plays.get(perf.playID);
         double thisAmount = play.calculateAmount(perf);
@@ -44,8 +47,15 @@ public class StatementPrinter {
         html.append("<tr><td>" + play.name + "</td><td>" + perf.audience + "</td><td colspan='2'>" + formatAmount(thisAmount) + "</td></tr>");
          totalAmount += thisAmount;
       }
-          html.append("<tr><td colspan='2'><b>Total Owed</b></td><td >" + formatAmount(totalAmount) + "</td></tr>");
 
+      
+      if (volumeCredits >= 150) {
+          totalAmount -= 15.0;
+          customer.loyaltyPoints = customer.loyaltyPoints - 150 ;
+      }
+
+          html.append("<tr><td colspan='2'><b>Total Owed</b></td><td >" + formatAmount(totalAmount) + "</td></tr>");
+          html.append("<tr><td colspan='2'><b>Fidelity points earned</b></td><td>" + customer.loyaltyPoints + "</td></tr>");
           html.append("</table>");
           html.append("<p>Payment is required under 30 days. We can break your knees if you don't do so.</p>");
 
