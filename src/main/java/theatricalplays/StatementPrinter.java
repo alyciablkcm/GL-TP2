@@ -23,6 +23,10 @@ public class StatementPrinter {
          result.append(String.format("  %s: %s (%s seats)\n", play.name, formatAmount(thisAmount), perf.audience));
          totalAmount += thisAmount;
      }
+         if (customer.loyaltyPoints >= 150) {
+             totalAmount -= 15.0;
+             customer.deductLoyaltyPoints(150);
+         }
        result.append(String.format("Amount owed is %s\n", formatAmount(totalAmount)));
        result.append(String.format("You earned %s credits\n", volumeCredits));
        return result.toString();
@@ -47,13 +51,10 @@ public class StatementPrinter {
         html.append("<tr><td>" + play.name + "</td><td>" + perf.audience + "</td><td colspan='2'>" + formatAmount(thisAmount) + "</td></tr>");
          totalAmount += thisAmount;
       }
-
-      
-      if (volumeCredits >= 150) {
+      if (customer.loyaltyPoints >= 150) {
           totalAmount -= 15.0;
-          customer.loyaltyPoints = customer.loyaltyPoints - 150 ;
+          customer.deductLoyaltyPoints(150);
       }
-
           html.append("<tr><td colspan='2'><b>Total Owed</b></td><td >" + formatAmount(totalAmount) + "</td></tr>");
           html.append("<tr><td colspan='2'><b>Fidelity points earned</b></td><td>" + customer.loyaltyPoints + "</td></tr>");
           html.append("</table>");

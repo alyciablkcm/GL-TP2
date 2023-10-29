@@ -6,11 +6,11 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 
-
 public class Invoice {
 
   public Customer customer;
   public List<Performance> performances;
+  public StatementPrinter statementPrinter;
 
   public Invoice(Customer customer, List<Performance> performances) {
     this.customer = customer;
@@ -18,22 +18,18 @@ public class Invoice {
   }
 
   public void toHTMLFile(Map<String, Play> plays, String fileName) {
-    StatementPrinter statementPrinter = new StatementPrinter();
-    String htmlInvoice = statementPrinter.render(this,plays);
-    try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
-      writer.write(htmlInvoice);
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-  }
+      exportToFile(plays, fileName, statementPrinter.render(this, plays));
+      }
 
   public void toTEXTFile(Map<String, Play> plays, String fileName) {
-    StatementPrinter statementPrinter = new StatementPrinter();
-    String htmlInvoice = statementPrinter.print(this,plays);
-    try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
-      writer.write(htmlInvoice);
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
+      exportToFile(plays, fileName, statementPrinter.print(this, plays));
   }
+
+  private void exportToFile(Map<String, Play> plays, String fileName, String invoice) {
+       try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
+           writer.write(invoice);
+       } catch (IOException e) {
+           e.printStackTrace();
+       }
+   }
 }
