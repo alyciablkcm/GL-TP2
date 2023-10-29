@@ -1,10 +1,10 @@
 package theatricalplays;
 
 public abstract class Play {
-      public String name;
-      public String type;
-      public static final String TRAGEDY = "tragedy";
-      public static final String COMEDY = "comedy";
+      protected String name;
+      protected String type;
+      protected static final String TRAGEDY = "tragedy";
+      protected static final String COMEDY = "comedy";
 
       protected Play(String name, String type) {
           this.name = name;

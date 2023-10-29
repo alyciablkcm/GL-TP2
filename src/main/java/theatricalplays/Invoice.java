@@ -15,17 +15,18 @@ public class Invoice {
   public Invoice(Customer customer, List<Performance> performances) {
     this.customer = customer;
     this.performances = performances;
+    this.statementPrinter = new StatementPrinter();
   }
 
   public void toHTMLFile(Map<String, Play> plays, String fileName) {
-      exportToFile(plays, fileName, statementPrinter.render(this, plays));
+      exportToFile(fileName, statementPrinter.render(this, plays));
       }
 
   public void toTEXTFile(Map<String, Play> plays, String fileName) {
-      exportToFile(plays, fileName, statementPrinter.print(this, plays));
+      exportToFile(fileName, statementPrinter.print(this, plays));
   }
 
-  private void exportToFile(Map<String, Play> plays, String fileName, String invoice) {
+  private void exportToFile(String fileName, String invoice) {
        try (BufferedWriter writer = new BufferedWriter(new FileWriter(fileName))) {
            writer.write(invoice);
        } catch (IOException e) {

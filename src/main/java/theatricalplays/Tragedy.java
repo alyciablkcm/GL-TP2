@@ -14,7 +14,6 @@ public class Tragedy extends Play {
     }
 
     public int calculateVolumeCredits(Performance perf){
-      int volumeCredits = Math.max(perf.audience - 30, 0);
-      return volumeCredits;
+      return Math.max(perf.audience - 30, 0);
     }
 }
